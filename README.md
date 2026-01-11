@@ -1,104 +1,252 @@
-# New Nx Repository
+# 🏢 Mi Empresa - Monorepo
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+Monorepo empresarial construido con **Nx**, **Vue 3**, **TypeScript** y **Vite**.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+Este proyecto demuestra arquitectura escalable con código compartido entre múltiples aplicaciones.
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+---
 
-## Generate a library
-
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
+## 📦 Estructura del Proyecto
+```
+mi-empresa/
+├── packages/              # Código compartido
+│   ├── ui/               # Componentes Vue reutilizables
+│   ├── utils/            # Funciones utilitarias
+│   ├── interfaces/       # Tipos TypeScript compartidos
+│   └── settings/         # Configuraciones y constantes
+│
+└── apps/                 # Aplicaciones deployables
+    └── demo-app/         # Aplicación de demostración
 ```
 
-## Run tasks
+---
 
-To build the library use:
+## 🎯 Paquetes
 
-```sh
-npx nx build pkg1
+### 1. `@mi-empresa/ui`
+
+**Propósito:** Biblioteca de componentes de UI reutilizables.
+
+**Exporta:**
+- `Button` - Componente de botón con 3 variantes (primary, secondary, danger)
+- `Card` - Componente de tarjeta con header, body y footer
+
+**Tecnologías:**
+- Vue 3.4
+- TypeScript
+- Vite (para compilación)
+
+**Consumido por:**
+- `apps/demo-app`
+
+**Comandos:**
+```bash
+cd packages/ui
+npm install
+npm run build
 ```
 
-To run any task with Nx use:
+---
 
-```sh
-npx nx <target> <project-name>
+### 2. `@mi-empresa/utils`
+
+**Propósito:** Funciones de utilidad comunes.
+
+**Exporta:**
+- `formatDate(date: Date): string` - Formatea fechas a DD/MM/YYYY
+- `validateEmail(email: string): boolean` - Valida formato de email
+
+**Tecnologías:**
+- TypeScript
+
+**Consumido por:**
+- `apps/demo-app`
+
+**Comandos:**
+```bash
+cd packages/utils
+npm install
+npm run build
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+---
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### 3. `@mi-empresa/interfaces`
 
-## Versioning and releasing
+**Propósito:** Definiciones de tipos e interfaces compartidas para tipado de datos.
 
-To version and release the library use
+**Exporta:**
+- `User` - Interface para usuarios del sistema
+- `Task` - Interface para tareas
+- `TaskStatus` - Enum de estados de tareas
+- `TaskPriority` - Enum de prioridades
+- `ApiResponse<T>` - Respuesta estándar de API
+- `Pagination` - Interface de paginación
 
-```
-npx nx release
-```
+**Tecnologías:**
+- TypeScript
 
-Pass `--dry-run` to see what would happen without actually releasing the library.
+**Consumido por:**
+- Todos los paquetes y aplicaciones que necesiten tipado
 
-[Learn more about Nx release &raquo;](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Keep TypeScript project references up to date
-
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
-
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
-
-```sh
-npx nx sync
-```
-
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
-
-```sh
-npx nx sync:check
+**Comandos:**
+```bash
+cd packages/interfaces
+npm install
+npm run build
 ```
 
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
+---
 
-## Nx Cloud
+### 4. `@mi-empresa/settings`
 
-Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
+**Propósito:** Configuraciones compartidas (variables de entorno, constantes, feature flags).
 
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+**Exporta:**
+- `APP_NAME`, `APP_VERSION` - Constantes de aplicación
+- `API_ENDPOINTS` - Rutas de API centralizadas
+- `THEME` - Colores y breakpoints del tema
+- `FEATURES` - Feature flags para activar/desactivar funcionalidades
+- `ENV` - Configuración de entorno
+- `validateEnv()` - Validación de variables requeridas
 
-### Set up CI (non-Github Actions CI)
+**Tecnologías:**
+- TypeScript
+- @types/node
 
-**Note:** This is only required if your CI provider is not GitHub Actions.
+**Consumido por:**
+- Todas las aplicaciones del monorepo
 
-Use the following command to configure a CI workflow for your workspace:
-
-```sh
-npx nx g ci-workflow
+**Comandos:**
+```bash
+cd packages/settings
+npm install
+npm run build
 ```
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+---
 
-## Install Nx Console
+## 🚀 Aplicaciones
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+### `demo-app`
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Aplicación de demostración que integra todos los paquetes del monorepo.
 
-## Useful links
+**Características:**
+- ✅ Usa componentes de `@mi-empresa/ui`
+- ✅ Usa funciones de `@mi-empresa/utils`
+- ✅ Tipado con `@mi-empresa/interfaces`
+- ✅ Configurado con `@mi-empresa/settings`
 
-Learn more:
+**Ejecutar:**
+```bash
+cd apps/demo-app
+npm install
+npm run dev
+```
 
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Abre http://localhost:5173
 
-And join the Nx community:
+---
 
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## 🛠️ Tecnologías
+
+- **Gestor de Monorepo:** Nx 22.3.3
+- **Framework:** Vue 3.4
+- **Build Tool:** Vite 5.0
+- **Lenguaje:** TypeScript 5.3
+- **Package Manager:** npm
+
+---
+
+## 📋 Instalación
+
+### 1. Clonar el repositorio
+```bash
+git clone https://github.com/Emmory/monorepo-demo.git
+cd monorepo-demo
+```
+
+### 2. Compilar todos los paquetes
+```bash
+# Compilar utils
+cd packages/utils && npm install && npm run build && cd ../..
+
+# Compilar interfaces
+cd packages/interfaces && npm install && npm run build && cd ../..
+
+# Compilar settings
+cd packages/settings && npm install && npm run build && cd ../..
+
+# Compilar ui
+cd packages/ui && npm install && npm run build && cd ../..
+```
+
+### 3. Instalar y ejecutar la app
+```bash
+cd apps/demo-app
+npm install
+npm run dev
+```
+
+---
+
+## 🎨 Ventajas del Monorepo
+
+### ✅ Código Compartido
+- Un cambio en `Button.vue` se refleja en todas las apps
+- Evita duplicación de código
+
+### ✅ Tipado Consistente
+- Types compartidos garantizan contratos de datos uniformes
+- IntelliSense completo en toda la codebase
+
+### ✅ Refactorización Segura
+- TypeScript alerta cuando un cambio afecta múltiples apps
+- Imposible romper contratos sin saberlo
+
+### ✅ Desarrollo Eficiente
+- Nuevas apps arrancan con componentes existentes
+- Menos código que escribir y mantener
+
+---
+
+## 📚 Comandos Útiles
+
+### Compilar todo
+```bash
+npm run build --workspace=packages/utils
+npm run build --workspace=packages/ui
+npm run build --workspace=packages/interfaces
+npm run build --workspace=packages/settings
+```
+
+### Agregar dependencia a un paquete
+```bash
+npm install <package> --workspace=packages/ui
+```
+
+### Ver estructura
+```bash
+npx nx graph
+```
+
+---
+
+## 👨‍💻 Autor
+
+**Emory Carias Gonzalez**
+
+- GitHub: [@Emmory](https://github.com/Emmory)
+
+---
+
+
+
+## 🤝 Contribuir
+
+1. Fork el proyecto
+2. Crea una rama (`git checkout -b feature/nueva-feature`)
+3. Commit tus cambios (`git commit -m 'Agregar nueva feature'`)
+4. Push a la rama (`git push origin feature/nueva-feature`)
+5. Abre un Pull Request

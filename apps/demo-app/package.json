@@ -9,7 +9,9 @@
   "dependencies": {
     "vue": "^3.4.0",
     "@mi-empresa/ui": "file:../../packages/ui",
-    "@mi-empresa/utils": "file:../../packages/utils"
+    "@mi-empresa/utils": "file:../../packages/utils",
+    "@mi-empresa/interfaces": "file:../../packages/interfaces",
+    "@mi-empresa/settings": "file:../../packages/settings"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.0",

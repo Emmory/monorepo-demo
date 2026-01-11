@@ -1,0 +1,13 @@
+{
+  "name": "@mi-empresa/settings",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.6",
+    "typescript": "^5.3.3"
+  }
+}

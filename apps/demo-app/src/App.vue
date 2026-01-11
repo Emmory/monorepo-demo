@@ -83,6 +83,57 @@
         <small style="color: #6b7280;">
           Importadas desde: <code>packages/utils/src/</code>
         </small>
+
+        
+      </template>
+    </Card>
+    <!-- Card 3: Tipos de @mi-empresa/interfaces -->
+    <Card style="margin-top: 2rem;">
+      <template #header>
+        <h2 style="margin: 0;">📋 Tipos de @mi-empresa/interfaces</h2>
+      </template>
+      
+      <p style="color: #6b7280; margin-bottom: 1rem;">
+        Ejemplo de tipos TypeScript compartidos:
+      </p>
+      
+      <pre style="background: #f3f4f6; padding: 1rem; border-radius: 0.375rem; overflow-x: auto; font-size: 0.875rem;"><code>{{ sampleUser }}</code></pre>
+      
+      <template #footer>
+        <small style="color: #6b7280;">
+          Tipos desde: <code>packages/interfaces/src/</code>
+        </small>
+      </template>
+    </Card>
+    
+    <!-- Card 4: Configuraciones de @mi-empresa/settings -->
+    <Card style="margin-top: 2rem;">
+      <template #header>
+        <h2 style="margin: 0;">⚙️ Configuraciones de @mi-empresa/settings</h2>
+      </template>
+      
+      <div style="margin-bottom: 1rem;">
+        <h3 style="margin-bottom: 0.5rem; font-size: 1rem;">Constantes:</h3>
+        <div style="padding: 0.75rem; background: #f3f4f6; border-radius: 0.375rem;">
+          <p style="margin: 0.25rem 0;"><strong>App:</strong> {{ APP_NAME }} v{{ APP_VERSION }}</p>
+          <p style="margin: 0.25rem 0;"><strong>Color Primary:</strong> <span :style="`color: ${THEME.COLORS.PRIMARY}`">{{ THEME.COLORS.PRIMARY }}</span></p>
+        </div>
+      </div>
+      
+      <div>
+        <h3 style="margin-bottom: 0.5rem; font-size: 1rem;">Feature Flags:</h3>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <span v-for="(value, key) in FEATURES" :key="key" 
+                :style="`padding: 0.25rem 0.75rem; border-radius: 0.25rem; font-size: 0.875rem; background: ${value ? '#d1fae5' : '#fee2e2'}; color: ${value ? '#065f46' : '#991b1b'}`">
+            {{ key }}: {{ value ? '✅' : '❌' }}
+          </span>
+        </div>
+      </div>
+      
+      <template #footer>
+        <small style="color: #6b7280;">
+          Configuraciones desde: <code>packages/settings/src/</code>
+        </small>
       </template>
     </Card>
     
@@ -100,6 +151,8 @@
 import { ref, computed } from 'vue'
 import { Button, Card } from '../../../packages/ui/src/index'
 import { formatDate, validateEmail } from '../../../packages/utils/src/index'
+import { APP_NAME, APP_VERSION, THEME, FEATURES } from '../../../packages/settings/src/index'
+import type { User } from '../../../packages/interfaces/src/index'
 
 // Estado
 const lastClick = ref('')
@@ -112,5 +165,13 @@ const isEmailValid = computed(() => validateEmail(email.value))
 // Métodos
 const handleClick = (variant: string) => {
   lastClick.value = `Botón ${variant} clickeado a las ${new Date().toLocaleTimeString()}`
+}
+
+const sampleUser: User = {
+  id: '1',
+  email: 'demo@ejemplo.com',
+  name: 'Usuario Demo',
+  role: 'admin',
+  createdAt: '2026-01-10'
 }
 </script>
