@@ -5,7 +5,7 @@ Monorepo empresarial construido con **Nx**, **Vue 3**, **TypeScript** y **Vite**
 Este proyecto demuestra arquitectura escalable con código compartido entre múltiples aplicaciones.
 
 ---
-
+En el archivo Documentacion de creacion de mono repo.docx se documenta la creacion del monorepo
 ## 📦 Estructura del Proyecto
 ```
 mi-empresa/
