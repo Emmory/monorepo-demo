@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd packages/interfaces && npm install && npm run build && cd ../utils && npm install && npm run build && cd ../settings && npm install && npm run build && cd ../../apps/taskmaster-pro && npm install && npm run build",
+  "outputDirectory": "apps/taskmaster-pro/.output/public",
+  "installCommand": "npm install",
+  "framework": null
+}
